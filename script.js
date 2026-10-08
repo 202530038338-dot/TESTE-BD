@@ -1,6 +1,6 @@
-const URL = "https://uqqbqsrldydbuiimzyfk.supabase.co";
+const URL = "https://srsfnmcfcegyzksescdc.supabase.co";
 
-const KEY = "sb_publishable_k7qTjmFn6lgEWpxUXgLL3A_M2T8ZlJX";
+const KEY = "sb_publishable_qiBWuQjwoZ-9mjLxS4T2Hw_ZmS6Ku3P";
 
 
 // SALVAR PRODUTO
