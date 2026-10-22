@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja de Roupas</title>
 </head>
 
@@ -12,10 +14,22 @@
 
     <h2>Cadastrar produto</h2>
 
-    <input id="nome" placeholder="Nome do produto">
+    <input
+        id="nome"
+        type="text"
+        placeholder="Nome do produto"
+    >
+
+    <input
+        id="preco"
+        type="number"
+        placeholder="Preço do produto"
+        step="0.01"
+        min="0"
+    >
 
     <button onclick="salvar()">
-        Salvar
+        Salvar produto
     </button>
 
     <p id="mensagem"></p>
@@ -25,27 +39,6 @@
     <ul id="lista"></ul>
 
     <script src="script.js"></script>
-```html
-<h2>Cadastrar preço</h2>
 
-<input
-    type="number"
-    id="valor"
-    placeholder="Digite o preço do produto"
-    step="0.01"
-    min="0"
->
-
-<button onclick="salvarPreco()">
-    Salvar preço
-</button>
-
-<p id="mensagemPreco"></p>
-
-<h2>Preços cadastrados</h2>
-
-<ul id="listaPrecos"></ul>
-```
 </body>
-
 </html>
