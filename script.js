@@ -3,175 +3,127 @@ const URL = "https://srsfnmcfcegyzksescdc.supabase.co";
 const KEY = "sb_publishable_qiBWuQjwoZ-9mjLxS4T2Hw_ZmS6Ku3P";
 
 
-// SALVAR PRODUTO
+// SALVAR NOME E PREÇO DO PRODUTO
 async function salvar() {
 
-    const nome = document.getElementById("nome").value;
+    const nome = document.getElementById("nome").value.trim();
+
+    const preco = document.getElementById("preco").value;
 
     if (nome === "") {
         alert("Digite o nome do produto!");
         return;
     }
 
-    const resposta = await fetch(
-        URL + "/rest/v1/produtos",
-        {
-            method: "POST",
+    if (preco === "" || !Number.isFinite(Number(preco)) || Number(preco) < 0) {
+        alert("Digite um preço válido!");
+        return;
+    }
 
-            headers: {
-                "apikey": KEY,
-                "Authorization": "Bearer " + KEY,
-                "Content-Type": "application/json"
-            },
+    try {
 
-            body: JSON.stringify({
-                nome: nome
-            })
+        const resposta = await fetch(
+            URL + "/rest/v1/produtos",
+            {
+                method: "POST",
+
+                headers: {
+                    "apikey": KEY,
+                    "Authorization": "Bearer " + KEY,
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    nome: nome,
+                    preco: Number(preco)
+                })
+            }
+        );
+
+        if (resposta.ok) {
+
+            document.getElementById("mensagem").innerText =
+                "Produto salvo com sucesso!";
+
+            document.getElementById("nome").value = "";
+            document.getElementById("preco").value = "";
+
+            listarProdutos();
+
+        } else {
+
+            const erro = await resposta.text();
+
+            console.error(erro);
+
+            document.getElementById("mensagem").innerText =
+                "Erro ao salvar. Confira o console.";
+
         }
-    );
 
-    if (resposta.ok) {
+    } catch (erro) {
 
-        document.getElementById("mensagem").innerText =
-            "Produto salvo!";
-
-        document.getElementById("nome").value = "";
-
-        listarProdutos();
-
-    } else {
+        console.error(erro);
 
         document.getElementById("mensagem").innerText =
-            "Erro ao salvar.";
+            "Não foi possível conectar ao Supabase.";
 
     }
 }
 
 
-// LISTAR PRODUTOS
+// LISTAR NOME E PREÇO DOS PRODUTOS
 async function listarProdutos() {
 
-    const resposta = await fetch(
-        URL + "/rest/v1/produtos?select=*",
-        {
-            method: "GET",
+    try {
 
-            headers: {
-                "apikey": KEY,
-                "Authorization": "Bearer " + KEY
+        const resposta = await fetch(
+            URL + "/rest/v1/produtos?select=*",
+            {
+                method: "GET",
+
+                headers: {
+                    "apikey": KEY,
+                    "Authorization": "Bearer " + KEY
+                }
             }
+        );
+
+        if (!resposta.ok) {
+            console.error(await resposta.text());
+            return;
         }
-    );
 
-    const produtos = await resposta.json();
+        const produtos = await resposta.json();
 
-    const lista = document.getElementById("lista");
+        const lista = document.getElementById("lista");
 
-    lista.innerHTML = "";
+        lista.innerHTML = "";
 
-    produtos.forEach(produto => {
+        produtos.forEach(produto => {
 
-        const item = document.createElement("li");
+            const item = document.createElement("li");
 
-        item.innerText =
-            produto.id + " - " + produto.nome;
+            const precoFormatado = Number(produto.preco)
+                .toFixed(2)
+                .replace(".", ",");
 
-        lista.appendChild(item);
+            item.innerText =
+                produto.id + " - " +
+                produto.nome + " - R$ " +
+                precoFormatado;
 
-    });
+            lista.appendChild(item);
+
+        });
+
+    } catch (erro) {
+
+        console.error("Erro ao consultar produtos:", erro);
+
+    }
 }
 
 
 // CARREGAR PRODUTOS AO ABRIR A PÁGINA
 listarProdutos();
-// SALVAR PREÇO
-async function salvarPreco() {
-
-    const valor = document.getElementById("valor").value;
-
-    if (valor === "" || Number(valor) < 0) {
-        alert("Digite um preço válido!");
-        return;
-    }
-
-    const resposta = await fetch(
-        URL + "/rest/v1/preco",
-        {
-            method: "POST",
-
-            headers: {
-                "apikey": KEY,
-                "Authorization": "Bearer " + KEY,
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                valor: Number(valor)
-            })
-        }
-    );
-
-    if (resposta.ok) {
-
-        document.getElementById("mensagemPreco").innerText =
-            "Preço salvo com sucesso!";
-
-        document.getElementById("valor").value = "";
-
-        listarPrecos();
-
-    } else {
-
-        const erro = await resposta.text();
-
-        console.error(erro);
-
-        document.getElementById("mensagemPreco").innerText =
-            "Erro ao salvar o preço. Confira o console.";
-
-    }
-}
-
-
-// LISTAR PREÇOS
-async function listarPrecos() {
-
-    const resposta = await fetch(
-        URL + "/rest/v1/preco?select=*",
-        {
-            method: "GET",
-
-            headers: {
-                "apikey": KEY,
-                "Authorization": "Bearer " + KEY
-            }
-        }
-    );
-
-    if (!resposta.ok) {
-        console.error(await resposta.text());
-        return;
-    }
-
-    const precos = await resposta.json();
-
-    const lista = document.getElementById("listaPrecos");
-
-    lista.innerHTML = "";
-
-    precos.forEach(preco => {
-
-        const item = document.createElement("li");
-
-        item.innerText =
-            preco.id + " - R$ " +
-            Number(preco.valor).toFixed(2).replace(".", ",");
-
-        lista.appendChild(item);
-
-    });
-}
-
-
-// CARREGAR PREÇOS AO ABRIR A PÁGINA
-listarPrecos();
