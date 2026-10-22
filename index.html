@@ -25,7 +25,27 @@
     <ul id="lista"></ul>
 
     <script src="script.js"></script>
+```html
+<h2>Cadastrar preço</h2>
 
+<input
+    type="number"
+    id="valor"
+    placeholder="Digite o preço do produto"
+    step="0.01"
+    min="0"
+>
+
+<button onclick="salvarPreco()">
+    Salvar preço
+</button>
+
+<p id="mensagemPreco"></p>
+
+<h2>Preços cadastrados</h2>
+
+<ul id="listaPrecos"></ul>
+```
 </body>
 
 </html>
