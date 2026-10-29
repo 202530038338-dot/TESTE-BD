@@ -111,7 +111,7 @@ async function listarProdutos() {
             item.innerText =
                 produto.id + " - " +
                 produto.nome + " - R$ " +
-                precoFormatado;
+                precoFormatado + " " + produto.descricao;
 
             lista.appendChild(item);
 
