@@ -2,6 +2,7 @@ const URL = "https://srsfnmcfcegyzksescdc.supabase.co";
 
 const KEY = "sb_publishable_qiBWuQjwoZ-9mjLxS4T2Hw_ZmS6Ku3P";
 
+
 // CADASTRAR PRODUTO NO SUPABASE
 document.getElementById("formProduto").addEventListener("submit", salvar);
 
@@ -140,11 +141,4 @@ async function listarProdutos() {
 }
 
 // CARREGAR PRODUTOS QUANDO A PÁGINA ABRIR
-listarProdutos();
-
-    }
-}
-
-
-// CARREGAR PRODUTOS AO ABRIR A PÁGINA
 listarProdutos();
