@@ -1,44 +1,48 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja de Roupas</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <main class="container">
+        <header class="topo">
+            <h1>Loja de Roupas</h1>
+            <p>Cadastre e visualize os produtos da loja.</p>
+        </header>
 
-    <h1>Loja de Roupas</h1>
+        <section class="formulario">
+            <h2>Cadastrar produto</h2>
 
-    <h2>Cadastrar produto</h2>
+            <form id="formProduto">
+                <label for="nome">Nome do produto</label>
+                <input id="nome" type="text" placeholder="Ex.: Camiseta Básica" required>
 
-    <input
-        id="nome"
-        type="text"
-        placeholder="Nome do produto"
-    >
+                <label for="preco">Preço (R$)</label>
+                <input id="preco" type="number" min="0" step="0.01" placeholder="Ex.: 59.90" required>
 
-    <input
-        id="preco"
-        type="number"
-        placeholder="Preço do produto"
-        step="0.01"
-        min="0"
-    >
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" rows="3" placeholder="Descreva o produto"></textarea>
 
-    <button onclick="salvar()">
-        Salvar produto
-    </button>
+                <label for="imagem">URL da imagem</label>
+                <input id="imagem" type="url" placeholder="https://site.com/imagem.jpg">
 
-    <p id="mensagem"></p>
+                <button id="btnSalvar" type="submit">Salvar produto</button>
+            </form>
+            <p id="mensagem" aria-live="polite"></p>
+        </section>
 
-    <h2>Produtos cadastrados</h2>
-
-    <ul id="lista"></ul>
+        <section class="secao-produtos">
+            <h2>Produtos cadastrados</h2>
+            <div id="lista" class="produtos-container">
+                <!-- Os cards serão criados pelo JavaScript -->
+            </div>
+        </section>
+    </main>
 
     <script src="script.js"></script>
-
 </body>
 </html>
